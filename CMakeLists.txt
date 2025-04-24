@@ -17,7 +17,9 @@ endif ()
 
 project(Luau.LanguageServer LANGUAGES CXX)
 add_subdirectory(luau)
-add_library(Luau.LanguageServer STATIC)
+add_library(Luau.LanguageServer STATIC
+        src/include/LSP/TASBoxDefinitions.hpp
+        src/operations/TASBoxDefinitions.cpp)
 add_executable(Luau.LanguageServer.CLI)
 add_executable(Luau.LanguageServer.Test)
 

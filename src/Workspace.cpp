@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "LSP/LanguageServer.hpp"
+#include "LSP/TASBoxDefinitions.hpp"
 #include "Platform/LSPPlatform.hpp"
 #include "Platform/RobloxPlatform.hpp"
 #include "glob/match.h"
@@ -371,6 +372,11 @@ void WorkspaceFolder::registerTypes(const std::vector<std::string>& disabledGlob
 
     if (client->definitionsFiles.empty())
         client->sendLogMessage(lsp::MessageType::Warning, "No definitions file provided by client");
+
+    client->sendTrace("workspace initialization: registering TASBox types");
+    tasbox::registerDefinitions(frontend, frontend.globals);
+    tasbox::registerDefinitions(frontend, frontend.globalsForAutocomplete);
+    client->sendTrace("workspace initialization: registering TASBox types COMPLETED");
 
     for (const auto& definitionsFile : client->definitionsFiles)
     {
